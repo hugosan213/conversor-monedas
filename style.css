@@ -20,6 +20,17 @@ body.dark {
     max-width: 400px;
     width: 100%;
     transition: box-shadow 0.2s, background 0.3s, color 0.3s;
+    animation: fadeInUp 0.7s cubic-bezier(.39,.575,.56,1.000);
+}
+@keyframes fadeInUp {
+    0% {
+        opacity: 0;
+        transform: translateY(40px);
+    }
+    100% {
+        opacity: 1;
+        transform: translateY(0);
+    }
 }
 body.dark .container {
     background: #23272f;
@@ -53,7 +64,7 @@ select, input[type="number"] {
     margin-bottom: 1.2rem;
     font-size: 1rem;
     background: #f8fafd;
-    transition: border 0.2s, background 0.3s, color 0.3s;
+    transition: border 0.2s, background 0.3s, color 0.3s, box-shadow 0.2s;
 }
 body.dark select, body.dark input[type="number"] {
     background: #23272f;
@@ -63,6 +74,7 @@ body.dark select, body.dark input[type="number"] {
 select:focus, input[type="number"]:focus {
     border: 1.5px solid #007bff;
     outline: none;
+    box-shadow: 0 0 0 2px #007bff33;
 }
 body.dark select:focus, body.dark input[type="number"]:focus {
     border: 1.5px solid #00c6ff;
@@ -77,11 +89,16 @@ button {
     font-size: 1.1rem;
     font-weight: 600;
     cursor: pointer;
-    transition: background 0.2s;
+    transition: background 0.2s, transform 0.15s, box-shadow 0.2s;
     margin-top: 0.5rem;
+    box-shadow: 0 2px 8px rgba(0,123,255,0.08);
 }
 button:hover {
     background: linear-gradient(90deg, #0056b3 60%, #007bff 100%);
+}
+button:active {
+    transform: scale(0.97);
+    box-shadow: 0 1px 4px rgba(0,123,255,0.12);
 }
 #resultado {
     margin-top: 1.7rem;
@@ -91,29 +108,181 @@ button:hover {
     text-align: center;
     font-weight: 500;
     transition: color 0.3s;
+    animation: fadeInResult 0.5s cubic-bezier(.39,.575,.56,1.000);
 }
-body.dark #resultado {
-    color: #f1f1f1;
+@keyframes fadeInResult {
+    0% {
+        opacity: 0;
+        transform: scale(0.95);
+    }
+    100% {
+        opacity: 1;
+        transform: scale(1);
+    }
 }
+/* Nuevo switch animado para modo oscuro */
 .toggle-dark {
     position: absolute;
     top: 1.2rem;
     right: 1.2rem;
+    background: none;
+    border: none;
+    outline: none;
+    cursor: pointer;
+    z-index: 10;
+    width: 54px;
+    height: 32px;
+    padding: 0;
+}
+.toggle-switch {
+    width: 54px;
+    height: 32px;
+    background: #e0e0e0;
+    border-radius: 16px;
+    position: relative;
+    transition: background 0.3s;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.08);
+}
+.toggle-switch .switch-thumb {
+    position: absolute;
+    top: 3px;
+    left: 3px;
+    width: 26px;
+    height: 26px;
+    background: #fff;
+    border-radius: 50%;
+    box-shadow: 0 2px 6px rgba(0,0,0,0.10);
+    transition: left 0.3s, background 0.3s;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.2rem;
+}
+.toggle-switch .icon-moon {
+    color: #007bff;
+    transition: color 0.3s;
+}
+.toggle-switch .icon-sun {
+    color: #ffb300;
+    transition: color 0.3s;
+}
+body.dark .toggle-switch {
     background: #23272f;
+}
+body.dark .toggle-switch .switch-thumb {
+    left: 25px;
+    background: #23272f;
+}
+body.dark .toggle-switch .icon-moon {
+    color: #b0b0b0;
+}
+body.dark .toggle-switch .icon-sun {
+    color: #ffe066;
+}
+#historial {
+    margin-top: 2rem;
+    background: #f8fafd;
+    border-radius: 10px;
+    padding: 1rem 1.2rem;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.06);
+    animation: fadeInUp 0.7s cubic-bezier(.39,.575,.56,1.000);
+}
+body.dark #historial {
+    background: #23272f;
+    color: #f1f1f1;
+}
+#historial h3 {
+    margin-top: 0;
+    font-size: 1.1rem;
+    color: #007bff;
+    letter-spacing: 0.5px;
+}
+body.dark #historial h3 {
+    color: #00c6ff;
+}
+#lista-historial {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    max-height: 180px;
+    overflow-y: auto;
+}
+#lista-historial li {
+    padding: 0.4em 0.2em;
+    border-bottom: 1px solid #e0e0e0;
+    opacity: 0;
+    animation: fadeInResult 0.5s cubic-bezier(.39,.575,.56,1.000) forwards;
+}
+body.dark #lista-historial li {
+    border-bottom: 1px solid #333;
+}
+#lista-historial li:last-child {
+    border-bottom: none;
+}
+#copiar-resultado {
+    background: #007bff;
     color: #fff;
     border: none;
     border-radius: 50%;
-    width: 40px;
-    height: 40px;
-    font-size: 1.3rem;
+    width: 36px;
+    height: 36px;
+    font-size: 1.2rem;
     cursor: pointer;
-    box-shadow: 0 2px 8px rgba(0,0,0,0.12);
-    transition: background 0.3s, color 0.3s;
-    z-index: 10;
+    box-shadow: 0 2px 8px rgba(0,123,255,0.10);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: background 0.2s, transform 0.15s;
+    margin-left: 0.2em;
+    outline: none;
 }
-body.dark .toggle-dark {
-    background: #fff;
-    color: #23272f;
+#copiar-resultado:active {
+    transform: scale(0.93);
+    background: #0056b3;
+}
+#copiar-resultado.copiado {
+    background: #28a745;
+    color: #fff;
+    animation: popCopy 0.4s;
+}
+@keyframes popCopy {
+    0% { transform: scale(1); }
+    30% { transform: scale(1.18); }
+    60% { transform: scale(0.95); }
+    100% { transform: scale(1); }
+}
+#flag-origen, #flag-destino {
+    width: 28px;
+    height: 20px;
+    border-radius: 4px;
+    background: #e0e0e0;
+    display: inline-block;
+    overflow: hidden;
+    box-shadow: 0 1px 4px rgba(0,0,0,0.10);
+    margin-right: 0.2em;
+    transition: background 0.3s;
+}
+body.dark #flag-origen, body.dark #flag-destino {
+    background: #23272f;
+}
+#grafico-container {
+    margin-top: 2rem;
+    background: #f8fafd;
+    border-radius: 10px;
+    padding: 1rem 1.2rem;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.06);
+    animation: fadeInUp 0.7s cubic-bezier(.39,.575,.56,1.000);
+    text-align: center;
+}
+body.dark #grafico-container {
+    background: #23272f;
+}
+#grafico-tendencia {
+    width: 100% !important;
+    max-width: 350px;
+    margin: 0 auto;
+    display: block;
+    background: transparent;
 }
 @media (max-width: 500px) {
     .container {
@@ -127,8 +296,180 @@ body.dark .toggle-dark {
     .toggle-dark {
         top: 0.5rem;
         right: 0.5rem;
-        width: 34px;
-        height: 34px;
-        font-size: 1.1rem;
+        width: 44px;
+        height: 28px;
     }
+    .toggle-switch {
+        width: 44px;
+        height: 28px;
+    }
+    .toggle-switch .switch-thumb {
+        width: 20px;
+        height: 20px;
+        top: 4px;
+        left: 2px;
+        font-size: 1rem;
+    }
+    body.dark .toggle-switch .switch-thumb {
+        left: 20px;
+    }
+    .toggle-dark-fab {
+        top: 0.5rem;
+        right: 0.5rem;
+        width: 40px;
+        height: 40px;
+    }
+    #icon-modo {
+        width: 24px;
+        height: 24px;
+    }
+}
+#toast {
+    position: fixed;
+    bottom: 2.5rem;
+    left: 50%;
+    transform: translateX(-50%);
+    background: #007bff;
+    color: #fff;
+    padding: 0.9em 1.5em;
+    border-radius: 8px;
+    font-size: 1.1rem;
+    box-shadow: 0 2px 12px rgba(0,0,0,0.18);
+    z-index: 9999;
+    opacity: 0;
+    pointer-events: none;
+    animation: toastIn 0.5s forwards;
+}
+@keyframes toastIn {
+    0% { opacity: 0; transform: translateX(-50%) translateY(30px); }
+    100% { opacity: 1; transform: translateX(-50%) translateY(0); }
+}
+#favoritos-container {
+    margin-top: 2rem;
+    background: #f8fafd;
+    border-radius: 10px;
+    padding: 1rem 1.2rem;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.06);
+    animation: fadeInUp 0.7s cubic-bezier(.39,.575,.56,1.000);
+}
+body.dark #favoritos-container {
+    background: #23272f;
+    color: #f1f1f1;
+}
+#favoritos-container h3 {
+    margin-top: 0;
+    font-size: 1.1rem;
+    color: #ffb300;
+    letter-spacing: 0.5px;
+}
+#lista-favoritos {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    max-height: 120px;
+    overflow-y: auto;
+}
+#lista-favoritos li {
+    padding: 0.4em 0.2em;
+    border-bottom: 1px solid #e0e0e0;
+    display: flex;
+    align-items: center;
+    gap: 0.5em;
+    opacity: 0;
+    animation: fadeInResult 0.5s cubic-bezier(.39,.575,.56,1.000) forwards;
+}
+body.dark #lista-favoritos li {
+    border-bottom: 1px solid #333;
+}
+#lista-favoritos li:last-child {
+    border-bottom: none;
+}
+#lista-favoritos button {
+    background: #ffb300;
+    color: #fff;
+    border: none;
+    border-radius: 50%;
+    width: 28px;
+    height: 28px;
+    font-size: 1rem;
+    cursor: pointer;
+    margin-left: auto;
+    transition: background 0.2s;
+}
+#lista-favoritos button:hover {
+    background: #ff8800;
+}
+#exportar-container button, #voz-container button {
+    background: #007bff;
+    color: #fff;
+    border: none;
+    border-radius: 6px;
+    padding: 0.5em 1.1em;
+    font-size: 1rem;
+    margin-right: 0.2em;
+    cursor: pointer;
+    box-shadow: 0 2px 8px rgba(0,123,255,0.10);
+    transition: background 0.2s, transform 0.15s;
+}
+#exportar-container button:active, #voz-container button:active {
+    transform: scale(0.97);
+    background: #0056b3;
+}
+body.dark #exportar-container button, body.dark #voz-container button {
+    background: #23272f;
+    color: #fff;
+}
+body {
+    transition: background 0.5s cubic-bezier(.39,.575,.56,1.000);
+}
+body, .container, #historial, #favoritos-container, #grafico-container {
+    transition: background 0.5s cubic-bezier(.39,.575,.56,1.000), color 0.5s cubic-bezier(.39,.575,.56,1.000);
+}
+.toggle-dark-fab {
+    position: fixed;
+    top: 1.2rem;
+    right: 1.2rem;
+    z-index: 100;
+    width: 54px;
+    height: 54px;
+    border: none;
+    border-radius: 50%;
+    background: #fff;
+    box-shadow: 0 4px 16px rgba(0,123,255,0.13);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    transition: background 0.3s, box-shadow 0.3s, transform 0.2s;
+    outline: none;
+    padding: 0;
+    animation: popCopy 0.5s;
+}
+.toggle-dark-fab:active {
+    transform: scale(0.93);
+    box-shadow: 0 2px 8px rgba(0,123,255,0.18);
+}
+body.dark .toggle-dark-fab {
+    background: #23272f;
+    box-shadow: 0 4px 16px rgba(0,0,0,0.18);
+}
+#icon-modo {
+    transition: filter 0.3s;
+}
+body.dark #icon-modo {
+    filter: drop-shadow(0 0 4px #00c6ff);
+}
+#icon-moon {
+    transition: opacity 0.4s;
+    opacity: 1;
+}
+#icon-sun {
+    transition: opacity 0.4s;
+    opacity: 0;
+}
+body.dark #icon-moon {
+    opacity: 0;
+}
+body.dark #icon-sun {
+    opacity: 1;
 }

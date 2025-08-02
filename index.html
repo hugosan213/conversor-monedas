@@ -7,7 +7,13 @@
     <link rel="stylesheet" href="style.css">
 </head>
 <body>
-    <button class="toggle-dark" id="toggle-dark" title="Modo oscuro/claro">🌙</button>
+    <button class="toggle-dark-fab" id="toggle-dark" title="Modo oscuro/claro" aria-label="Modo oscuro/claro">
+      <svg id="icon-modo" width="32" height="32" viewBox="0 0 32 32" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <circle cx="16" cy="16" r="14" fill="#fff" stroke="#007bff" stroke-width="2"/>
+        <path id="icon-moon" d="M22 16A6 6 0 0 1 12 16c0-3.31 2.69-6 6-6 1.31 0 2.52.42 3.5 1.13A6.01 6.01 0 0 1 22 16z" fill="#007bff"/>
+        <path id="icon-sun" d="M16 10v-3M16 25v-3M25 16h-3M10 16H7M22.07 22.07l-2.12-2.12M9.93 9.93l2.12 2.12M22.07 9.93l-2.12 2.12M9.93 22.07l2.12-2.12" stroke="#ffb300" stroke-width="2" stroke-linecap="round" style="opacity:0;"/>
+      </svg>
+    </button>
     <div class="container">
         <h2>Conversor de Monedas</h2>
         <form id="form-conversor" autocomplete="off">
@@ -19,23 +25,46 @@
             </select>
 
             <label for="moneda-origen">Moneda Origen</label>
-            <select id="moneda-origen" required>
-                <option value="">Seleccione moneda</option>
-                <!-- Opciones se llenarán con JS -->
-            </select>
+            <div style="display:flex;align-items:center;gap:0.5em;">
+              <span id="flag-origen" aria-label="Bandera origen"></span>
+              <select id="moneda-origen" required aria-label="Moneda origen"></select>
+            </div>
 
             <label for="moneda-destino">Moneda Destino</label>
-            <select id="moneda-destino" required>
-                <option value="">Seleccione moneda</option>
-                <!-- Opciones se llenarán con JS -->
-            </select>
+            <div style="display:flex;align-items:center;gap:0.5em;">
+              <span id="flag-destino" aria-label="Bandera destino"></span>
+              <select id="moneda-destino" required aria-label="Moneda destino"></select>
+            </div>
 
             <label for="monto">Monto</label>
             <input type="number" id="monto" min="0" step="any" placeholder="Ingrese monto" required>
 
             <button type="submit">Convertir</button>
         </form>
-        <div id="resultado"></div>
+        <div id="resultado-container" style="display:flex;align-items:center;gap:0.5em;justify-content:center;">
+          <div id="resultado"></div>
+          <button id="copiar-resultado" title="Copiar resultado" aria-label="Copiar resultado" style="display:none;">📋</button>
+        </div>
+        <div id="historial">
+          <h3>Historial de conversiones</h3>
+          <ul id="lista-historial"></ul>
+        </div>
+        <div id="grafico-container">
+          <canvas id="grafico-tendencia" height="120"></canvas>
+        </div>
+        <div id="toast" role="alert" aria-live="polite" style="display:none;"></div>
+    <div id="favoritos-container">
+      <h3>Favoritos</h3>
+      <ul id="lista-favoritos"></ul>
+    </div>
+    <div id="exportar-container" style="margin-top:1em;display:flex;gap:0.5em;">
+      <button id="exportar-csv">Exportar CSV</button>
+      <button id="exportar-pdf">Exportar PDF</button>
+    </div>
+    <div id="voz-container" style="margin-top:1em;display:flex;gap:0.5em;">
+      <button id="leer-resultado">🔊 Leer resultado</button>
+      <button id="dictar-monto">🎤 Dictar monto</button>
+    </div>
     </div>
 </body>
 <script src="script.js"></script>
